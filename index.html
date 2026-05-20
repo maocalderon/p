@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Académico</title>
+    <style>
+        /* Estilos generales y fondo oscuro */
+        body {
+            background-color: #202124; 
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        /* Contenedor principal (la tarjeta flotante) */
+        .card {
+            background-color: #292a2d;
+            padding: 40px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Enlace de la parte superior */
+        .header-link {
+            color: #8ab4f8;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .header-link::before {
+            content: '➔';
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+
+        /* Título y descripción */
+        h1 {
+            font-size: 2.2rem;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+        }
+
+        p.description {
+            color: #9aa0a6;
+            font-size: 0.95rem;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        /* Estilo de los botones azules */
+        .link-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0b57d0;
+            color: white;
+            text-decoration: none;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .link-button:hover {
+            background-color: #0842a0;
+        }
+
+        .link-text {
+            display: flex;
+            flex-direction: column;
+            pointer-events: none; /* Para que el clic lo registre el botón completo */
+        }
+
+        .link-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+
+        .link-subtitle {
+            font-size: 0.85rem;
+            color: #e3e3e3;
+        }
+
+        .link-icon {
+            font-size: 1.2rem;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        /* Pie de página */
+        .footer {
+            text-align: center;
+            color: #7f848a;
+            font-size: 0.8rem;
+            margin-top: 35px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card" id="menu-principal">
+    <a href="#" class="header-link">Ingreso Portal Académico</a>
+    
+    <h1>Enlaces rápidos</h1>
+    <p class="description">Acceda fácilmente a las plataformas que necesite.</p>
+
+    <button class="link-button" onclick="abrirPlataforma('https://gemini.google.com/app', this)">
+        <div class="link-text">
+            <span class="link-title">Genesis</span>
+            <span class="link-subtitle">Abrir asistente inteligente</span>
+        </div>
+        <span class="link-icon">↗</span>
+    </button>
+
+    <button class="link-button" onclick="abrirPlataforma('https://aulaextendida.udes.edu.co', this)">
+        <div class="link-text">
+            <span class="link-title">Aula Extendida</span>
+            <span class="link-subtitle">Ingreso a la plataforma académica UDES</span>
+        </div>
+        <span class="link-icon">↗</span>
+    </button>
+
+    <div class="footer">
+        Universidad de Santander UDES. Vigilada Mineducación.<br>
+        Gestión de TIC - 2026
+    </div>
+</div>
+
+<script>
+    // Contador para saber cuántos clics hemos hecho
+    let clicsRealizados = 0;
+
+    function abrirPlataforma(urlDestino, botonPresionado) {
+        // Si este botón ya fue presionado antes, ignoramos el clic
+        if (botonPresionado.getAttribute('data-estado') === 'abierto') {
+            return; 
+        }
+
+        // Marcamos el botón como presionado para que no lo vuelvan a clickear
+        botonPresionado.setAttribute('data-estado', 'abierto');
+        botonPresionado.style.opacity = '0.5';
+        botonPresionado.style.cursor = 'default';
+        botonPresionado.querySelector('.link-subtitle').innerText = "Plataforma iniciada...";
+
+        clicsRealizados++;
+
+        if (clicsRealizados === 1) {
+            // PRIMER CLIC: Se abre en una ventana nueva flotante
+            window.open(urlDestino, '_blank');
+        } else if (clicsRealizados === 2) {
+            // SEGUNDO CLIC: Reemplazamos la página actual para que el Portal desaparezca
+            // Usamos 'replace' para que no quede guardado en el historial de navegación
+            window.location.replace(urlDestino);
+        }
+    }
+</script>
+
+</body>
+</html>
